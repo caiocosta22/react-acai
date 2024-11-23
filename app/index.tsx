@@ -1,8 +1,14 @@
 import React from 'react';
+import { Link } from 'expo-router';
+import { Linking } from 'react-native';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
+  const handleOpenMaps = () => {
+    Linking.openURL('https://maps.app.goo.gl/B7jBe2J3JcYsVsMo8');
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -12,7 +18,7 @@ export default function HomeScreen() {
       >
         {/* Logo no topo */}
         <Image 
-          source={require('@/assets/images/logo.png')} 
+          source={require('@/assets/images/logo.png')}  
           style={styles.logo} 
         />
         
@@ -20,15 +26,22 @@ export default function HomeScreen() {
         <Text style={styles.title}>Recanto Açaí</Text>
 
         {/* Botões */}
-        <TouchableOpacity style={[styles.button]}>
-          <Text style={styles.buttonText}>Cardápio</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button]}>
+        <Link href="/cardapio" asChild>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Cardápio</Text>
+          </TouchableOpacity>
+        </Link>
+        <TouchableOpacity style={styles.button} onPress={handleOpenMaps}>
           <Text style={styles.buttonText}>Localização</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button]}>
-          <Text style={styles.buttonText}>Nossa História</Text>
-        </TouchableOpacity>
+        <Link href="/nossahistoria" asChild>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Nossa História</Text>
+          </TouchableOpacity>
+        </Link>
+
+        {/* Texto Final */}
+        <Text style={styles.footer}>Funcionamos de Seg a Sexta 08:00 - 18:00</Text>
       </LinearGradient>
     </View>
   );
@@ -39,29 +52,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   background: {
-    alignItems: 'center',       // Centraliza os itens horizontalmente
+    alignItems: 'center',
     padding: 40,
     flex: 1,
   },
   logo: {
     width: 120,
     height: 120,
-    marginBottom: 15, // Espaço abaixo da logo
+    marginBottom: 15,
   },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#fff',  // Texto branco
+    color: '#fff', 
     marginBottom: 20,
     textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#141414',  // Texto branco
-    marginBottom: 20,
-    textAlign: 'center',
-    lineHeight: 20, // Ajuste de espaçamento entre linhas
   },
   button: {
     backgroundColor: 'transparent',
@@ -71,13 +76,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     opacity: 1,
-    marginVertical: 10, // Espaçamento entre botões
+    marginVertical: 10,
     borderColor: '#fff',
     borderWidth: 1,
   },
   buttonText: {
-    color: '#fff', // Texto preto
+    color: '#fff',
     fontSize: 16,
     fontWeight: '500',
+  },
+  footer: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '500',
+    marginTop: 20
   }
 });
